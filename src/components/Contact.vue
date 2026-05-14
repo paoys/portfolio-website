@@ -7,6 +7,63 @@ const isFormSubmitted = ref(false)
 const isFormLoading = ref(false)
 const formError = ref('')
 
+// Rate limiting configuration
+const COOLDOWN_SECONDS = 60 // Wait 60 seconds between submissions
+const MAX_MESSAGES_PER_24H = 5 // Max 5 messages per 24 hours
+const STORAGE_KEY = 'contact_form_submissions'
+
+// Get submission history from localStorage
+const getSubmissionHistory = () => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) return []
+    try {
+        return JSON.parse(stored)
+    } catch {
+        return []
+    }
+}
+
+// Save submission to history
+const saveSubmission = () => {
+    const history = getSubmissionHistory()
+    history.push(Date.now())
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history))
+}
+
+// Clean up old submissions older than 24 hours
+const cleanupOldSubmissions = () => {
+    const history = getSubmissionHistory()
+    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000
+    const filtered = history.filter(timestamp => timestamp > oneDayAgo)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered))
+    return filtered
+}
+
+// Check if user can submit based on rate limits
+const checkRateLimit = () => {
+    const history = cleanupOldSubmissions()
+    const now = Date.now()
+
+    // Check cooldown (60 seconds between submissions)
+    if (history.length > 0) {
+        const lastSubmission = history[history.length - 1]
+        const secondsElapsed = (now - lastSubmission) / 1000
+        if (secondsElapsed < COOLDOWN_SECONDS) {
+            const remaining = Math.ceil(COOLDOWN_SECONDS - secondsElapsed)
+            formError.value = `Please wait ${remaining} second${remaining !== 1 ? 's' : ''} before sending another message.`
+            return false
+        }
+    }
+
+    // Check daily limit (5 messages per 24 hours)
+    if (history.length >= MAX_MESSAGES_PER_24H) {
+        formError.value = `You've reached the limit of ${MAX_MESSAGES_PER_24H} messages per 24 hours. Please try again later.`
+        return false
+    }
+
+    return true
+}
+
 const validateForm = () => {
     const { name, email, message } = contactForm.value
 
@@ -34,23 +91,26 @@ const validateForm = () => {
 const handleFormSubmit = async () => {
     if (isFormSubmitted.value || isFormLoading.value) return
     if (!validateForm()) return
+    if (!checkRateLimit()) return
 
     isFormLoading.value = true
 
     try {
-        // Send email using a service like Formspree, EmailJS, or your own backend
-        const response = await fetch('https://formspree.io/f/mnjwyljj', {
+        // Call your Vercel serverless function
+        const response = await fetch('/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name: contactForm.value.name,
                 email: contactForm.value.email,
-                message: contactForm.value.message,
-                _subject: `New message from ${contactForm.value.name}`
+                message: contactForm.value.message
             })
         })
 
+        const data = await response.json()
+
         if (response.ok) {
+            saveSubmission() // Record successful submission
             isFormSubmitted.value = true
             contactForm.value = { name: '', email: '', message: '' }
             formError.value = ''
@@ -60,7 +120,7 @@ const handleFormSubmit = async () => {
                 isFormSubmitted.value = false
             }, 5000)
         } else {
-            formError.value = 'Failed to send message. Please try again.'
+            formError.value = data.error || 'Failed to send message. Please try again.'
         }
     } catch (error) {
         console.error('Form submission error:', error)
