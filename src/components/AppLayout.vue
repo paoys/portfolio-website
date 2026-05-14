@@ -1,11 +1,15 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { NAV_LINKS } from '@/data/portfolio'
+import resumeFile from '/resume/Jaspher_Paoyo_Resume.pdf'
+import PdfModal from './PdfModal.vue'
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 const scrollProgress = ref(0)
 const theme = ref(localStorage.getItem('theme') || 'light')
+const showResumeModal = ref(false)
+const resumePath = resumeFile
 
 const currentYear = computed(() => new Date().getFullYear())
 
@@ -29,6 +33,15 @@ const onScroll = () => {
 const scrollToSection = (id) => {
     isMobileMenuOpen.value = false
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+}
+
+const openResume = () => {
+    isMobileMenuOpen.value = false
+    showResumeModal.value = true
+}
+
+const closeResume = () => {
+    showResumeModal.value = false
 }
 
 onMounted(() => {
@@ -58,12 +71,26 @@ onUnmounted(() => {
                 </ul>
 
                 <div class="navbar__actions">
-                    <button class="theme-toggle"
+                    <!-- Resume Button -->
+                    <button class="resume-btn" @click="openResume" aria-label="View Resume">
+                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                            <path d="M2 1h6l3 3v8H2V1z" stroke="currentColor" stroke-width="1.3"
+                                stroke-linejoin="round" />
+                            <path d="M8 1v3h3M4 6h5M4 8h5M4 10h3" stroke="currentColor" stroke-width="1.3"
+                                stroke-linecap="round" />
+                        </svg>
+                        Resume
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" :class="{ 'theme-toggle--dark': theme === 'dark' }"
                         :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
                         @click="toggleTheme">
-                        <span v-if="theme === 'light'">🌙</span>
-                        <span v-else>☀️</span>
+                        <span class="theme-toggle__knob">
+                            <span class="theme-toggle__icon">{{ theme === 'dark' ? '☀️' : '🌙' }}</span>
+                        </span>
                     </button>
+
                     <button class="hamburger" :class="{ 'is-open': isMobileMenuOpen }"
                         :aria-expanded="String(isMobileMenuOpen)" aria-label="Toggle mobile menu"
                         @click="isMobileMenuOpen = !isMobileMenuOpen">
@@ -81,6 +108,14 @@ onUnmounted(() => {
                 @click.prevent="scrollToSection(link.id)">
                 {{ link.label }}
             </a>
+            <button class="mobile-menu__resume" @click="openResume">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M2 1h6l3 3v8H2V1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+                    <path d="M8 1v3h3M4 6h5M4 8h5M4 10h3" stroke="currentColor" stroke-width="1.3"
+                        stroke-linecap="round" />
+                </svg>
+                View Resume
+            </button>
         </div>
 
         <!-- Slots for sections -->
@@ -93,5 +128,9 @@ onUnmounted(() => {
                     stroke-linejoin="round" />
             </svg>
         </button>
+
+        <!-- PDF Modal for Resume -->
+        <PdfModal :is-open="showResumeModal" title="Jaspher Paoyo — Resume" :pdf-path="resumePath"
+            download-filename="Jaspher_Paoyo_Resume.pdf" aria-label="Resume Preview" @close="closeResume" />
     </div>
 </template>

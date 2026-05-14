@@ -20,12 +20,30 @@ export const STATS = [
 ];
 
 export const CERTIFICATIONS = [
-  'Huawei Cloud Service Certification',
-  'Database Foundations',
-  'Database Systems',
-  'SAP Business One Advanced (Implementation & Support)',
-  'SAP Business One Basic (Logistics & Financial)',
-  'Network Foundations',
+  {
+    label: 'Huawei Cloud Service Certification',
+    pdf: '/certificates/huawei-cloud.pdf',
+  },
+  {
+    label: 'Database Foundations',
+    pdf: '/certificates/database-foundations.pdf',
+  },
+  {
+    label: 'Database Systems',
+    pdf: '/certificates/database-systems.pdf',
+  },
+  {
+    label: 'SAP Business One Advanced (Implementation & Support)',
+    pdf: '/certificates/sap-advanced.pdf',
+  },
+  {
+    label: 'SAP Business One Basic (Logistics & Financial)',
+    pdf: '/certificates/sap-basic.pdf',
+  },
+  {
+    label: 'Network Foundations',
+    pdf: '/certificates/network-foundations.pdf',
+  },
 ];
 
 export const SKILL_CATEGORIES = [
