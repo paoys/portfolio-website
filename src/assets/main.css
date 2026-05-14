@@ -279,33 +279,71 @@ button   { font-family: var(--font-body); cursor: pointer; border: none; backgro
   gap: 16px;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-  width: 44px;
-  height: 24px;
-  background-color: var(--color-bg-muted);
-  border: 1px solid var(--color-border-strong);
-  border-radius: 100px;
+/* Resume Button */
+.resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: 12.5px;
+  font-weight: 500;
   cursor: pointer;
-  position: relative;
-  transition: background-color var(--transition-base);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
   flex-shrink: 0;
 }
 
-.theme-toggle::after {
-  content: '';
+.resume-btn:hover {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  width: 52px;
+  height: 28px;
+  background-color: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.theme-toggle--dark {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-strong);
+}
+
+.theme-toggle__knob {
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 16px;
-  height: 16px;
-  background-color: var(--color-text-primary);
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform var(--transition-base);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="dark"] .theme-toggle::after {
-  transform: translateX(20px);
+.theme-toggle--dark .theme-toggle__knob {
+  transform: translateX(24px);
+}
+
+.theme-toggle__icon {
+  font-size: 11px;
+  line-height: 1;
 }
 
 /* Hamburger */
@@ -355,6 +393,180 @@ button   { font-family: var(--font-body); cursor: pointer; border: none; backgro
 }
 
 .mobile-menu__link:hover { opacity: 0.45; }
+
+.mobile-menu__resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.mobile-menu__resume:hover {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   PDF MODAL
+   ============================================================ */
+.pdf-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.pdf-modal__panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 860px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+}
+
+.pdf-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.pdf-modal__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.pdf-modal__icon {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.pdf-modal__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pdf-modal__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+}
+
+.pdf-modal__btn--download {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+}
+
+.pdf-modal__btn--download:hover {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+.pdf-modal__btn--close {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  padding: 6px 8px;
+}
+
+.pdf-modal__btn--close:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.pdf-modal__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+
+.pdf-modal__iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background-color: var(--color-bg-subtle);
+}
+
+.pdf-modal__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--color-border);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.pdf-modal__fallback a {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* PDF modal transition */
+.pdf-modal-enter-active,
+.pdf-modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.pdf-modal-enter-active .pdf-modal__panel,
+.pdf-modal-leave-active .pdf-modal__panel {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.pdf-modal-enter-from,
+.pdf-modal-leave-to {
+  opacity: 0;
+}
+
+.pdf-modal-enter-from .pdf-modal__panel,
+.pdf-modal-leave-to .pdf-modal__panel {
+  opacity: 0;
+  transform: scale(0.95) translateY(8px);
+}
 
 /* ============================================================
    HERO
@@ -582,16 +794,37 @@ button   { font-family: var(--font-body); cursor: pointer; border: none; backgro
   color: var(--color-text-primary);
 }
 
-.cert-item__icon {
-  width: 28px;
-  height: 28px;
+.cert-item--clickable {
+  cursor: pointer;
+  justify-content: flex-start;
+}
+
+.cert-item--clickable:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
   background-color: var(--color-bg-muted);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
+}
+
+.cert-item--clickable:focus-visible {
+  outline: 2px solid var(--color-border-strong);
+  outline-offset: 2px;
+}
+
+.cert-item__label {
+  flex: 1;
+}
+
+.cert-item__arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
   flex-shrink: 0;
+  color: var(--color-text-secondary);
+}
+
+.cert-item--clickable:hover .cert-item__arrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* ============================================================
@@ -992,6 +1225,16 @@ button   { font-family: var(--font-body); cursor: pointer; border: none; backgro
   border-radius: var(--radius-sm);
   font-size: 14px;
   color: var(--color-success);
+  text-align: center;
+}
+
+.form-error {
+  padding: 16px 20px;
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: #ef4444;
   text-align: center;
 }
 

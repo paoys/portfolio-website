@@ -1,5 +1,7 @@
 <script setup>
+import { ref } from 'vue'
 import { STATS, CERTIFICATIONS } from '@/data/portfolio'
+import PdfModal from './PdfModal.vue'
 
 defineProps({
     stats: {
@@ -11,6 +13,16 @@ defineProps({
         default: () => CERTIFICATIONS,
     },
 })
+
+const activeCert = ref(null)
+
+function openCert(cert) {
+    activeCert.value = cert
+}
+
+function closeCert() {
+    activeCert.value = null
+}
 </script>
 
 <template>
@@ -46,13 +58,26 @@ defineProps({
 
                     <p class="section-label" style="margin-top: 36px;">Certifications</p>
                     <ul class="cert-list" role="list">
-                        <li class="cert-item reveal" v-for="cert in certifications" :key="cert">
+                        <li class="cert-item cert-item--clickable reveal" v-for="cert in certifications"
+                            :key="cert.label" @click="openCert(cert)" role="button" tabindex="0"
+                            :aria-label="`View ${cert.label} certificate`" @keydown.enter="openCert(cert)"
+                            @keydown.space.prevent="openCert(cert)">
                             <span class="cert-item__icon" aria-hidden="true">✦</span>
-                            {{ cert }}
+                            <span class="cert-item__label">{{ cert.label }}</span>
+                            <span class="cert-item__arrow" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- PDF Modal for Certificate Preview -->
+    <PdfModal :is-open="!!activeCert" :title="activeCert?.label || ''" :pdf-path="activeCert?.pdf || ''"
+        :aria-label="`Certificate: ${activeCert?.label || ''}`" icon="✦" @close="closeCert" />
 </template>
