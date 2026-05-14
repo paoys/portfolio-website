@@ -8,8 +8,8 @@ const isFormLoading = ref(false)
 const formError = ref('')
 
 // Rate limiting configuration
-const COOLDOWN_SECONDS = 60 // Wait 60 seconds between submissions
-const MAX_MESSAGES_PER_24H = 5 // Max 5 messages per 24 hours
+const COOLDOWN_SECONDS = 120 // Wait 120 seconds between submissions
+const MAX_MESSAGES_PER_24H = 2 // Max 2 messages per 24 hours
 const STORAGE_KEY = 'contact_form_submissions'
 
 // Get submission history from localStorage
@@ -44,7 +44,7 @@ const checkRateLimit = () => {
     const history = cleanupOldSubmissions()
     const now = Date.now()
 
-    // Check cooldown (60 seconds between submissions)
+    // Check cooldown (120 seconds between submissions)
     if (history.length > 0) {
         const lastSubmission = history[history.length - 1]
         const secondsElapsed = (now - lastSubmission) / 1000
@@ -55,7 +55,7 @@ const checkRateLimit = () => {
         }
     }
 
-    // Check daily limit (5 messages per 24 hours)
+    // Check daily limit (2 messages per 24 hours)
     if (history.length >= MAX_MESSAGES_PER_24H) {
         formError.value = `You've reached the limit of ${MAX_MESSAGES_PER_24H} messages per 24 hours. Please try again later.`
         return false
