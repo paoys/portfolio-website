@@ -19,13 +19,21 @@ defineProps({
             <div class="projects__grid">
                 <article class="project-card reveal" v-for="project in projects" :key="project.name">
                     <div class="project-card__header">
-                        <span class="project-card__icon">{{ project.emoji }}</span>
-                        <a href="javascript:void(0)" class="project-card__action" aria-label="Project link">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                                <path d="M3 13h10M13 3v10H3" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </a>
+                        <div class="project-card__logo-wrapper">
+                            <img :src="project.logo" :alt="project.name" class="project-card__logo" />
+                        </div>
+                        <div class="project-card__actions">
+                            <a :href="project.live" class="project-card__action project-card__action--live"
+                                aria-label="View live project" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                                <span>View</span>
+                            </a>
+                        </div>
                     </div>
 
                     <h3 class="project-card__name">{{ project.name }}</h3>

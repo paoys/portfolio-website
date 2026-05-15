@@ -1,22 +1,22 @@
 export const NAV_LINKS = [
-  { id: 'about',      label: 'About' },
-  { id: 'skills',     label: 'Skills' },
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
-  { id: 'projects',   label: 'Projects' },
-  { id: 'contact',    label: 'Contact' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 export const FOOTER_LINKS = [
-  { id: 'about',    label: 'About' },
+  { id: 'about', label: 'About' },
   { id: 'projects', label: 'Work' },
-  { id: 'contact',  label: 'Contact' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 export const STATS = [
   { value: '1+', label: 'Years professional exp.' },
   { value: '5+', label: 'Systems built' },
   { value: 'CL', label: 'Graduated Cum Laude' },
-  { value: '6',  label: 'Certifications' },
+  { value: '6', label: 'Certifications' },
 ];
 
 export const CERTIFICATIONS = [
@@ -96,41 +96,33 @@ export const EXPERIENCE = [
 
 export const PROJECTS = [
   {
-    emoji: '🎫',
-    name: 'Coupon Code Management System',
-    description: 'End-to-end coupon lifecycle management with workflow approvals, PDF batch generation, QR scan API integrations, status reversal, and activity logging.',
-    stack: ['Laravel', 'Vue.js', 'MySQL', 'REST API', 'PDF'],
+    logo: 'https://weather-app-paoys.vercel.app/favicon.ico',
+    name: 'Weather Dashboard',
+    description: 'A responsive weather app featuring real-time city search, GPS-based geolocation, and animated weather gradients that adapt to current conditions. It includes a 5-day forecast, hourly weather breakdowns, a °C/°F toggle, and recent search history with individual item removal — all powered by the OpenWeatherMap API.',
+    stack: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'OpenWeatherMap API', 'Vite'],
+    live: 'https://weather-app-paoys.vercel.app/',
   },
   {
-    emoji: '🏢',
-    name: 'Tenant Management System',
-    description: 'Interactive floor unit mapping, auto-generated rental contracts, payment monitoring dashboard, and multi-step approval workflows.',
-    stack: ['Laravel', 'Vue.js', 'MySQL'],
+    logo: 'https://chippie-chomps-inventory.vercel.app/favicon.svg',
+    name: 'Chippie Chomps Inventory System',
+    description: 'An inventory management system for a pet food store featuring product and supplier management, sales recording with automatic stock deduction, purchase order tracking with auto-replenishment upon receiving items, low-stock alerts, a sales dashboard with charts, and a user notification system — all secured with protected routes and Supabase-powered authentication with row-level security.',
+    stack: ['Vue', 'Pinia', 'Vue Router', 'Supabase', 'Tailwind CSS', 'Vite'],
+    live: 'https://chippie-chomps-inventory.vercel.app/',
   },
   {
-    emoji: '📦',
-    name: 'Count Schedule & Approval System',
-    description: 'Inventory count scheduling per branch with Infor API auto-population, bulk Excel upload, multi-level approvals, and comprehensive transaction logs.',
-    stack: ['Laravel', 'Vue.js', 'MySQL', 'Infor API', 'Excel'],
+    logo: 'https://budget-tracker-paoys.vercel.app/assets/assets/images/app_logo.png',
+    name: 'Personal Finance Tracker',
+    description: 'A cross-platform personal finance app built with Flutter. Features income tracking with monthly and cutoff-period modes, a budget allocation system with customizable sub-categories, expense logging with payment mode tracking (cash, GCash, credit card, etc.), savings goals, credit card management, recurring transactions, and an in-app notification system — all synced in real-time to Firestore with Google and email/password authentication.',
+    stack: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Google Sign-In'],
+    live: 'https://budget-tracker-paoys.vercel.app/',
   },
-  {
-    emoji: '💰',
-    name: 'Auto Incentives & Provincial Billing',
-    description: 'Automated incentive calculation and provincial billing workflows with approval routing, CRUD operations, and email notification triggers.',
-    stack: ['Laravel', 'Vue.js', 'MySQL', 'Email'],
-  },
-  {
-    emoji: '🏦',
-    name: 'Loan Management Admin Panel',
-    description: 'Admin interface for loan operations featuring navigation tabs, dynamic data tables across multiple modules, and OTP authentication.',
-    stack: ['Vue.js', 'MySQL', 'OTP Auth'],
-  },
-  {
-    emoji: '📚',
-    name: 'Booque Monitoring System',
-    description: 'Authentication system (login & registration) with responsive UI and optimized backend queries for the Booque platform.',
-    stack: ['Laravel', 'Vue.js', 'MySQL'],
-  },
+  // {
+  //   logo: 'https://cdn.worldvectorlogo.com/logos/flutter-logo.svg',
+  //   name: 'Business Management System',
+  //   description: 'A full-featured cross-platform POS and business management app built with Flutter. Includes a point-of-sale screen with cart management, inventory tracking with stock movement history, customer management, expense logging, attendance with camera-based check-in, payroll generation with payslip views, shift close summaries, discount management, sales reports, and push notifications — with role-based access control for Admin, Manager, and Staff. Firestore offline persistence keeps the app functional without internet.',
+  //   stack: ['Flutter', 'Dart', 'Firebase Auth', 'Cloud Firestore', 'Firebase Messaging', 'Riverpod', 'GoRouter'],
+  //   live: '#',
+  // }
 ];
 
 export const CONTACT_LINKS = [
